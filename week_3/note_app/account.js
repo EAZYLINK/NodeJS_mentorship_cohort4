@@ -7,6 +7,14 @@ exports.creatAccount = (req, res) => {
             data += chunk
         })
         req.on('end', () => {
+            if (!data) {
+                res.writeHead(400, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({
+                    success: false,
+                    message: 'Please provide data'
+                }))
+                return
+            }
             const account = JSON.parse(data)
             const {firstName, lastName, username, password} = account
            if (!firstName || !lastName || !username || !password) {

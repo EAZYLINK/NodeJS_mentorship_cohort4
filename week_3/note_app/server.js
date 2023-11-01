@@ -1,5 +1,6 @@
 const http = require('http')
 const { creatAccount, getAllAccounts, editAccount, getAcountByUsername, deleteAccount } = require('./account')
+const { createNote, getAllNotes, getNotesByUsername, getNotesByTitle, editNote, deleteNoteByTitle, deleteNoteByUsername} = require('./note')
 
 const PORT = 8000
 const server = http.createServer((req, res) => {
@@ -27,7 +28,14 @@ const server = http.createServer((req, res) => {
                     getAcountByUsername(req, res, params.get('username'))
                     break
                 case '/notes':
-                    res.end('Getting Notes')
+                    if (!params) {
+                        getAllNotes(req, res)
+                        return
+                    } else if(params.get('username')) {
+                        getNotesByUsername(req, res, params.get('username'))
+                    } else if(params.get('title')) {
+                        getNotesByTitle(req, res, params.get('title'))
+                    }
                     break
                 default:
                     res.writeHead(404, { 'Content-Type': 'application/json' })
@@ -39,8 +47,8 @@ const server = http.createServer((req, res) => {
             break
         case 'POST':
             switch (url) {
-                case '/note':
-                    res.end('Create Note')
+                case '/notes':
+                    createNote(req, res)
                     break
                 case '/accounts':
                     creatAccount(req, res)
@@ -55,8 +63,8 @@ const server = http.createServer((req, res) => {
             break
         case 'PUT':
             switch (url) {
-                case '/note':
-                    res.end('Edit Note')
+                case '/notes':
+                    editNote(req, res)
                     break
                 case '/accounts':
                     editAccount(req, res)
@@ -71,8 +79,12 @@ const server = http.createServer((req, res) => {
             break
         case 'DELETE':
             switch (path) {
-                case '/note':
-                    res.end('Delete Note')
+                case '/notes':
+                    if (params.get('username')) {
+                        deleteNoteByUsername(req, res, params.get('username'))
+                        return
+                    }
+                    deleteNoteByTitle(req, res, params.get('title'))
                     break
                 case '/accounts':
                     deleteAccount(req, res, params.get('username'))
