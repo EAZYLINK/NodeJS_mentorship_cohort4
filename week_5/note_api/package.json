@@ -1,0 +1,30 @@
+{
+  "name": "note_api",
+  "version": "1.0.0",
+  "description": "A note taking API",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EAZYLINK/NodeJS_Class_3.git"
+  },
+  "author": "EAZYLINK",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EAZYLINK/NodeJS_Class_3/issues"
+  },
+  "homepage": "https://github.com/EAZYLINK/NodeJS_Class_3#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
