@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import { accountRoutes } from './routes/account.js'
+import { noteRouter } from './routes/note.js'
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ app.get('/', (req, res)=>{
 })
 
 app.use('/accounts', accountRoutes)
+app.use('/notes', noteRouter)
 
 
 

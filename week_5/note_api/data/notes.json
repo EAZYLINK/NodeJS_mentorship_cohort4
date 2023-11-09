@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "noteid": "b63d2c55-29da-4925-9103-928e3beb5b30",
+    "userid": "69453d85-ea9f-49e4-a0c7-0bafee4b03ad",
+    "title": "evening class",
+    "description": "We had an evening on the topic writing note API",
+    "createdAt": "2023-11-09T17:19:12.098Z",
+    "updatedAt": "2023-11-09T17:19:12.098Z"
+  }
+]
