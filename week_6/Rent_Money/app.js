@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
+import {accountRouter} from './routes/accountRoutes.js';
+import { authRouter } from './routes/authRoutes.js';
 import { connectDB } from './config/db.js';
 dotenv.config();
 
@@ -13,6 +15,8 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to Rent Money API!' });
 })
 
+app.use('/accounts', accountRouter);
+app.use('/auth', authRouter);
 
 
 

@@ -5,7 +5,7 @@ const accountSchema = new Schema({
         type: String,
         required: true
     },
-    LastName: {
+    lastName: {
     type: String,
     required: true
     },
@@ -13,6 +13,7 @@ const accountSchema = new Schema({
     type: String,
     required: true,
     email: true,
+    unique: true
     },
     username: {
         type: String,
@@ -22,7 +23,20 @@ const accountSchema = new Schema({
     password: {
     type: String,
     required: true,
-    }
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    phone: {
+    type: String,
+    required: true,
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'customer'],
+        default: 'customer'
+    },
 }, { timestamps: true });
 
-export const AccountModel = model('Account', accountSchema);
+export const Account = model('Account', accountSchema);
