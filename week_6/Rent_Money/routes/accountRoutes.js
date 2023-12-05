@@ -6,11 +6,12 @@ import {
     updateAccountController,
     deleteAccountController
  } from '../controllers/accountController.js';
+ import { isLoggenInController, isAdminController } from '../middleware/auth.js';
 
 export const accountRouter = express.Router();
 
 accountRouter.post('/create', createAccountController);
-accountRouter.get('/get', getAccountController);
-accountRouter.get('/get/:id', getAccountByIdController);
-accountRouter.put('/update/:id', updateAccountController);
-accountRouter.delete('/delete/:id', deleteAccountController);
+accountRouter.get('/', isLoggenInController, isAdminController, getAccountController);
+accountRouter.route('/:id').get(isLoggenInController, getAccountByIdController)
+                            .put(isLoggenInController, updateAccountController)
+                            .delete(isLoggenInController, deleteAccountController)

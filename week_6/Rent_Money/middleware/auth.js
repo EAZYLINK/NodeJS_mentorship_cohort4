@@ -1,4 +1,4 @@
-import { generateToken, verifyToken, isValidPassword } from "../services/authServices.js";
+import { generateToken, verifyToken, isValidPassword, isAdminService, isBorrowerService, isLenderService } from "../services/authServices.js";
 import { getAccountByUsernameService } from "../services/accountService.js";
 import APIError from "../utils/apiError.js";
 
@@ -19,7 +19,7 @@ export const loginController = async (req, res, next) => {
       const payload = {
           id: account._id,
           username: account.username,
-          email: account.email,
+          role: account.role,
       }
       const token = generateToken(payload);
       res.status(200).json({
@@ -30,4 +30,62 @@ export const loginController = async (req, res, next) => {
   } catch (error) {
         next(APIError.customeError(error.message))
   }
+}
+
+export const isLoggenInController = async (req, res, next) => {
+    const auth = req.headers.authorization;
+    if (!auth) {
+        return next(APIError.badRequest('Authorization header is required'));
+    }
+    const token = auth.split(' ')[1];
+    if (!token) {
+        return next(APIError.badRequest('Token is required'));
+    }
+    try {
+        const payload = verifyToken(token);
+        if (!payload) {
+            return next(APIError.unAuthenticated('You need to login to access this route'));
+        }
+        req.payload = payload;
+        next()
+
+    } catch (error) {
+        next(APIError.customeError(error.message))
+    }
+}
+
+export const isAdminController = async (req, res, next) => {
+    const { role } = req.payload;
+    if (!role) {
+        return next(APIError.badRequest('Role is required'));
+    }
+    const isAdmin = isAdminService(role);
+    if (!isAdmin) {
+        return next(APIError.unAuthorized('You are not authorized to access this route'));
+    }
+    next();
+}
+
+export const isBorrowerController = async (req, res, next) => {
+    const { role } = req.payload;
+    if (!role) {
+        return next(APIError.badRequest('Role is required'));
+    }
+    const isBorrower = isBorrowerService(role);
+    if (!isBorrower) {
+        return next(APIError.unAuthorized('You are not authorized to access this route'));
+    }
+    next();
+}
+
+export const isLenderController = async (req, res, next) => {
+    const { role } = req.payload;
+    if (!role) {
+        return next(APIError.badRequest('Role is required'));
+    }
+    const isLender = isLenderService(role);
+    if (!isLender) {
+        return next(APIError.unAuthorized('You are not authorized to access this route'));
+    }
+    next();
 }

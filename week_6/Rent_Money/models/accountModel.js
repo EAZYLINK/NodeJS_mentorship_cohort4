@@ -34,8 +34,8 @@ const accountSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['admin', 'customer'],
-        default: 'customer'
+        enum: ['admin', 'borrower', 'lender'],
+        default: 'borrower'
     },
 }, { timestamps: true });
 

@@ -20,3 +20,24 @@ export const isValidPassword = (password, hashedPassword) => {
     const validPassword = bcrypt.compare(password, hashedPassword);
     return validPassword;
 }
+
+export const isAdminService = (role) => {
+    if (role === 'admin') {
+        return true;
+    }
+    return false;
+}
+
+export const isBorrowerService = (role) => {
+    if (role === 'borrower') {
+        return true;
+    }
+    return false;
+}
+
+export const isLenderService = (role) => {
+    if (role === 'lender') {
+        return true;
+    }
+    return false;
+}
